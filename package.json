@@ -4,8 +4,15 @@
   "description": "🐦 A smaller style of starline",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "esbuild src/main.js --outdir=www/dist --serve --servedir=www --watch  --define:DEV=true"
   },
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@mediapipe/tasks-vision": "^0.10.14",
+    "@types/three": "^0.164.0",
+    "esbuild": "^0.21.3",
+    "three": "^0.164.1"
+  }
 }
