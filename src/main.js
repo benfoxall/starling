@@ -3,6 +3,7 @@ import "./main.css";
 
 const pages = {
   track: () => import("./pages/track"),
+  depth: () => import("./pages/depth"),
 };
 
 const params = new URLSearchParams(location.search);
