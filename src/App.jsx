@@ -1,7 +1,5 @@
 import { Suspense, lazy } from "react";
 
-const Track = lazy(() => import("./pages/Track"));
-
 const PAGES = {
   track: lazy(() => import("./pages/Track")),
 };
