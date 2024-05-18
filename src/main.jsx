@@ -10,5 +10,4 @@ if (DEV) {
 }
 
 const root = createRoot(document.getElementById("app"));
-
 root.render(<App />);

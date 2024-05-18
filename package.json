@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --define:DEV=true --servedir=www --serve --watch",
-    "build": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --define:DEV=false --minify --sourcemap"
+    "build": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --format=esm --splitting --define:DEV=false --minify --sourcemap"
   },
   "author": "",
   "license": "MIT",
