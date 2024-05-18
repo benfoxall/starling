@@ -17,32 +17,67 @@ const faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
     modelAssetPath: "dist/" + model,
   },
   runningMode: "VIDEO",
+  numFaces: 1
 });
 
 
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+ctx.scale(300, 300)
 
 
-async function renderLoop(time = 10) {
 
-  // if (video.currentTime !== lastVideoTime) {
-  console.log(time)
+
+
+
+async function renderLoop(time) {
+
   const faceLandmarkerResult = faceLandmarker.detectForVideo(video, time);
   //   processResults(detections);
+  // console.log("_____", faceLandmarkerResult);
 
-  ctx.clearRect(0, 0, 300, 300)
-  ctx.fillStyle = 'red'
-  for (const landmark of faceLandmarkerResult.faceLandmarks) {
-    for (const point of landmark) {
+  if (faceLandmarkerResult.faceLandmarks.length) {
+    ctx.clearRect(0, 0, 300, 300)
+    ctx.fillStyle = 'red'
 
-      ctx.fillRect((point.x * 300) + 0, (point.y * 300) + 0, 2, 2)
+
+    for (const landmark of faceLandmarkerResult.faceLandmarks) {
+      ctx.fillStyle = 'red'
+      for (const point of landmark) {
+        ctx.fillRect((point.x) + 0, (point.y) + 0, 0.01, 0.01)
+      }
+
+
+      ctx.strokeStyle = 'green'
+      ctx.lineWidth = '.01'
+      ctx.beginPath()
+      for (const { start, end } of FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS) {
+        const startp = landmark[start]
+        const endp = landmark[end]
+
+        ctx.moveTo(startp.x, startp.y)
+        ctx.lineTo(endp.x, endp.y)
+      }
+
+      for (const { start, end } of FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS) {
+        const startp = landmark[start]
+        const endp = landmark[end]
+
+        ctx.moveTo(startp.x, startp.y)
+        ctx.lineTo(endp.x, endp.y)
+      }
+      ctx.stroke()
+
 
     }
 
+    // ctx.fillStyle = 'blue'
+
+
   }
-  console.log("_____", faceLandmarkerResult);
+
+
   //   lastVideoTime = video.currentTime;
   // }
 
@@ -51,7 +86,11 @@ async function renderLoop(time = 10) {
   requestAnimationFrame(renderLoop);
 }
 
-setTimeout(renderLoop, 100)
+setTimeout(renderLoop, 100, performance.now())
+
+console.log(FaceLandmarker.FACE_LANDMARKS_TESSELATION)
+
+// FaceLandmarker.
 
 // const Track = () => {
 //   // const videoRef = useRef()
