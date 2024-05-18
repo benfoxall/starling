@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --define:DEV=true --servedir=www --serve --watch",
-    "build": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --format=esm --splitting --define:DEV=false --minify --sourcemap"
+    "start": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.task=file --loader:.woff=file --format=esm --define:DEV=true --servedir=www --serve --watch",
+    "build": "esbuild src/main.jsx --jsx=automatic --outdir=www/dist --bundle --loader:.woff2=file --loader:.task=file --loader:.woff=file --format=esm --define:DEV=false --minify --sourcemap",
+    "postinstall": "cp -r node_modules/@mediapipe/tasks-vision/wasm ./www"
   },
   "author": "",
   "license": "MIT",
