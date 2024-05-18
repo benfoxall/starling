@@ -29,8 +29,6 @@ ctx.scale(300, 300)
 
 
 
-
-
 async function renderLoop(time) {
 
   const faceLandmarkerResult = faceLandmarker.detectForVideo(video, time);
