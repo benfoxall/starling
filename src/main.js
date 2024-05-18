@@ -1,5 +1,6 @@
-console.log("Hello main!")
+import './main.css';
 
+console.log("Hello mainss!")
 
 
 if (DEV) {

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "esbuild src/main.js --outdir=www/dist --define:DEV=true --servedir=www --serve --watch",
-    "build": "esbuild src/main.js --outdir=www/dist --define:DEV=false --minify --sourcemap"
+    "start": "esbuild src/main.js --outdir=www/dist --bundle --define:DEV=true --servedir=www --serve --watch",
+    "build": "esbuild src/main.js --outdir=www/dist --bundle --define:DEV=false --minify --sourcemap"
   },
   "author": "",
   "license": "MIT",
