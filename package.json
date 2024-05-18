@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "esbuild src/main.js --outdir=www/dist --bundle --define:DEV=true --servedir=www --serve --watch",
-    "build": "esbuild src/main.js --outdir=www/dist --bundle --define:DEV=false --minify --sourcemap"
+    "start": "esbuild src/main.js --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --define:DEV=true --servedir=www --serve --watch",
+    "build": "esbuild src/main.js --outdir=www/dist --bundle --loader:.woff2=file --loader:.woff=file --define:DEV=false --minify --sourcemap"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@fontsource/roboto-mono": "^5.0.18",
     "@mediapipe/tasks-vision": "^0.10.14",
     "@types/three": "^0.164.0",
     "esbuild": "^0.21.3",
