@@ -1,11 +1,12 @@
 {
   "name": "starling",
   "version": "1.0.0",
-  "description": "🐦 A smaller style of starline",
+  "description": "🐦 A smaller starline",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "esbuild src/main.js --outdir=www/dist --serve --servedir=www --watch  --define:DEV=true"
+    "start": "esbuild src/main.js --outdir=www/dist --define:DEV=true --servedir=www --serve --watch",
+    "build": "esbuild src/main.js --outdir=www/dist --define:DEV=false --minify --sourcemap"
   },
   "author": "",
   "license": "MIT",
