@@ -42,3 +42,8 @@ main {
   width: 100vw;
   align-items: center;
 }
+
+video.self {
+  position: absolute;
+  width: 10vmin;
+}

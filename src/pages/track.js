@@ -26,7 +26,7 @@ document.querySelector('main#app').innerHTML = `
   <br />
   <canvas></canvas>
   <br />
-  <output style="width: 80%">d</ouput>
+  <output style="width: 80%">-</ouput>
 `
 
 
