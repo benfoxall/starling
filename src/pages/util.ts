@@ -11,7 +11,7 @@ interface Connection {
   end: number;
 }
 
-const meh = 1;
+const meh = 5;
 
 export function extractThings(landmark: NormalizedLandmark[]): Things {
   const left = pointSet(landmark, FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS);
@@ -19,7 +19,11 @@ export function extractThings(landmark: NormalizedLandmark[]): Things {
 
   const { height } = bounds(right);
 
-  const distance = meh / height;
+  const { cx: rx, cy: ry } = bounds(right);
+  const { cx: lx, cy: ly } = bounds(left);
+  const d2 = Math.sqrt((rx - lx) ** 2 + (ry - ly) ** 2);
+
+  const distance = meh / d2;
 
   const { cx, cy } = bounds(new Set([...left, ...right]));
 
