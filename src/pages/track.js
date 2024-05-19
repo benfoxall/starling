@@ -1,12 +1,13 @@
 import { FilesetResolver, FaceLandmarker } from "@mediapipe/tasks-vision";
 import model from "../models/face_landmarker.task";
 
-console.log("___", FilesetResolver.forVisionTasks, model);
-
 
 document.querySelector('main#app').innerHTML = `
-  <video src="./test-video.mp4" width="200" autoplay loop muted></video>
-  <canvas height="300" width="300"></canvas>
+  <video src="./test-video.mp4" width="300" autoplay loop muted></video>
+  <br />
+  <canvas></canvas>
+  <br />
+  <output>d</ouput>
 `
 
 const vision = await FilesetResolver.forVisionTasks("./wasm");
@@ -24,24 +25,25 @@ const faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
 const video = document.querySelector('video');
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-ctx.scale(300, 300)
-
-
-
 
 async function renderLoop(time) {
 
   const faceLandmarkerResult = faceLandmarker.detectForVideo(video, time);
-  //   processResults(detections);
-  // console.log("_____", faceLandmarkerResult);
 
   if (faceLandmarkerResult.faceLandmarks.length) {
-    ctx.clearRect(0, 0, 300, 300)
+    canvas.width = video.videoWidth
+    canvas.height = video.videoHeight;
+    canvas.style.width = video.width + 'px'
+    canvas.style.background = '#fff2'
+    ctx.reset()
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.scale(canvas.width, canvas.height)
+
     ctx.fillStyle = 'red'
 
 
     for (const landmark of faceLandmarkerResult.faceLandmarks) {
-      ctx.fillStyle = 'red'
+      ctx.fillStyle = '#f005'
       for (const point of landmark) {
         ctx.fillRect((point.x) + 0, (point.y) + 0, 0.01, 0.01)
       }
@@ -58,67 +60,88 @@ async function renderLoop(time) {
         ctx.lineTo(endp.x, endp.y)
       }
 
+      const left = new Bounds(landmark, FaceLandmarker.FACE_LANDMARKS_LEFT_IRIS)
+      const right = new Bounds(landmark, FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS)
+      const mid = new Bounds()
+      mid.extend(left.min)
+      mid.extend(left.max)
+      mid.extend(right.min)
+      mid.extend(right.max)
+
+      // I care about a) midpoint, b) distance
+
+      const eyebounds = new Bounds();
+
       for (const { start, end } of FaceLandmarker.FACE_LANDMARKS_RIGHT_IRIS) {
         const startp = landmark[start]
         const endp = landmark[end]
 
+        eyebounds.extend(startp);
+        eyebounds.extend(endp);
+
         ctx.moveTo(startp.x, startp.y)
         ctx.lineTo(endp.x, endp.y)
       }
+
+      document.querySelector('output').innerHTML = `
+      ${right.min.x - right.max.x}<br />
+      ${right.center.x}, ${right.center.y}<br />
+
+      ${right.size.width}, ${right.size.height}<br />
+      `
+
+      ctx.fillStyle = '#00f5'
+      ctx.fillRect(mid.min.x, mid.min.y, mid.max.x - mid.min.x, mid.max.y - mid.min.y)
+      ctx.fillRect(mid.center.x, mid.center.y, 10, 10)
+
       ctx.stroke()
-
-
     }
-
-    // ctx.fillStyle = 'blue'
-
-
   }
 
 
-  //   lastVideoTime = video.currentTime;
-  // }
-
-  // await new Promise(r => setTimeout(r, 1000))
+  await new Promise(r => setTimeout(r, 100))
 
   requestAnimationFrame(renderLoop);
 }
 
 setTimeout(renderLoop, 100, performance.now())
 
-console.log(FaceLandmarker.FACE_LANDMARKS_TESSELATION)
 
-// FaceLandmarker.
 
-// const Track = () => {
-//   // const videoRef = useRef()
-//   function renderLoop() {
-//     const video = document.querySelector("video");
+class Bounds {
+  min; max;
 
-//     // if (video.currentTime !== lastVideoTime) {
-//     const faceLandmarkerResult = faceLandmarker.detect(video);
-//     //   processResults(detections);
-//     console.log("_____", faceLandmarkerResult);
-//     //   lastVideoTime = video.currentTime;
-//     // }
+  constructor(landmark, list) {
+    if (landmark && list) {
+      for (const { start, end } of list) {
+        this.extend(landmark[start])
+        this.extend(landmark[end])
+      }
+    }
+  }
 
-//     // requestAnimationFrame(() => {
-//     //   renderLoop();
-//     // });
-//   }
+  extend({ x, y }) {
+    this.min = {
+      x: Math.min(x, this.min?.x ?? Infinity),
+      y: Math.min(y, this.min?.y ?? Infinity)
+    }
+    this.max = {
+      x: Math.max(x, this.max?.x ?? -Infinity),
+      y: Math.max(y, this.max?.y ?? -Infinity)
+    }
+  }
 
-//   return (
-//     <>
-//       <h2>Tracking page</h2>
-//       <video
-//         autoPlay
-//         src="test-video.mp4"
-//         loop
-//         onClick={renderLoop}
-//         width={100}
-//       />
-//     </>
-//   );
-// };
+  get center() {
+    const x = this.min.x + (this.max.x - this.min.x) / 2
+    const y = this.min.y + (this.max.y - this.min.y) / 2
 
-// export default Track;
+    return { x, y }
+  }
+
+  get size() {
+    const width = (this.max.x - this.min.x)
+    const height = (this.max.y - this.min.y)
+
+    return { width, height }
+  }
+}

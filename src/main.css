@@ -5,15 +5,33 @@ body {
   font-family: Roboto Mono, monospace;
 }
 
-details nav {
+details#menu {
+  position: absolute;
+  z-index: 1000;
+  background-color: #0003;
+}
+
+details#menu nav {
   display: flex;
   flex-direction: column;
+  font-size: 1.5rem;
+}
+details#menu a {
+  padding: 0.5em;
 }
 
 a {
   color: inherit;
+  text-decoration-color: #fff4;
+  text-decoration-thickness: 2px;
 }
 
 a:hover {
   color: #fff;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
 }
