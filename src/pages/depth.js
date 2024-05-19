@@ -13,6 +13,28 @@ target.appendChild(image)
 
 await done
 
+let video;
+
+image.addEventListener('click', function () {
+
+    // Create a video element
+    video = document.createElement("video");
+    video.autoplay = true;
+    video.width = 400;
+
+    // Request access to the webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+
+            video.srcObject = stream;
+
+            image.replaceWith(video)
+        })
+        .catch((error) => {
+            console.error("Error accessing webcam:", error);
+        });
+}, { once: true });
+
 const model = depth.SupportedModels.ARPortraitDepth;
 
 const estimator = await depth.createEstimator(model);
@@ -34,12 +56,29 @@ canvas.height = image.height
 canvas.getContext('2d').drawImage(im, 0, 0);
 
 
-console.time("depth")
+async function loop() {
+    if (video?.videoWidth > 10) {
 
-const depthMap2 = await estimator.estimateDepth(image, estimationConfig);
-console.log(depthMap)
+        console.time("depth")
 
-console.timeEnd("depth")
+        const depthMap = await estimator.estimateDepth(video, estimationConfig);
+        console.log(depthMap)
+        const im = await depthMap.toCanvasImageSource()
+
+        canvas.width = video.videoWidth
+        canvas.height = video.videoHeight
+        canvas.style.width = video.width + 'px'
+        canvas.getContext('2d').drawImage(im, 0, 0);
+        console.timeEnd("depth")
+
+        requestAnimationFrame(loop)
+        return;
+
+    }
+    setTimeout(loop, 100)
+}
+
+loop()
 
 
 
