@@ -1,7 +1,4 @@
-import { FilesetResolver, FaceLandmarker } from "@mediapipe/tasks-vision";
-import model from "../models/face_landmarker.task";
 import { extractThings } from './util'
-
 
 
 const worker = new Worker('dist/track-worker.js')
