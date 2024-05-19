@@ -4,6 +4,7 @@ import "./main.css";
 const pages = {
   track: () => import("./pages/track"),
   depth: () => import("./pages/depth"),
+  '3dview': () => import("./pages/3d"),
 };
 
 const params = new URLSearchParams(location.search);
