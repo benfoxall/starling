@@ -24,6 +24,14 @@ details#menu {
   a {
     padding: 1em 0;
   }
+
+  a.dev {
+    opacity: 0.3;
+  }
+  a.dev:before {
+    content: "[dev] ";
+    font-size: 0.8em;
+  }
 }
 
 a {
