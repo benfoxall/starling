@@ -4,6 +4,9 @@ const target = document.querySelector("main")!;
 
 // Create the scene and camera
 const scene = new THREE.Scene();
+
+scene.fog = new THREE.Fog(0x000000, 10, 20); // Fog color, near and far distances
+
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -12,7 +15,7 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 // Create the renderer and add it to the DOM
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({});
 target.appendChild(renderer.domElement);
 
 // Set the size of the renderer
@@ -26,7 +29,7 @@ setSize();
 window.addEventListener("resize", setSize, false);
 
 // Add a grid helper for the background
-const gridHelper = new THREE.GridHelper(100, 100, 0xff0088, 0x0088ff);
+const gridHelper = new THREE.GridHelper(100, 50, 0x00aa55, 0x0055aa);
 gridHelper.scale.multiplyScalar(0.5);
 gridHelper.rotateX(Math.PI / 2);
 gridHelper.position.z = -2;
@@ -48,13 +51,8 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
 directionalLight.position.set(-5, 10, 5);
 scene.add(directionalLight);
 
-// Add a point light helper
-const sphereSize = 1;
-const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize);
-scene.add(pointLightHelper);
-
 // Add an ambient light for better overall illumination
-const ambientLight = new THREE.AmbientLight(0x404040); // soft white light
+const ambientLight = new THREE.AmbientLight(0xbbaacc); // soft white light
 scene.add(ambientLight);
 
 // Set the camera position
