@@ -46,4 +46,11 @@ main {
 video.self {
   position: absolute;
   width: 10vmin;
+  transform: scaleX(-1);
+}
+
+canvas.💅 {
+  position: fixed;
+  left: 0;
+  top: 0;
 }

@@ -17,6 +17,7 @@ const camera = new THREE.PerspectiveCamera(
 // Create the renderer and add it to the DOM
 const renderer = new THREE.WebGLRenderer({});
 target.appendChild(renderer.domElement);
+renderer.domElement.classList.add("💅");
 
 // Set the size of the renderer
 function setSize() {
