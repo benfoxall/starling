@@ -1,23 +1,15 @@
-import * as tf from '@tensorflow/tfjs';
+// import * as tf from '@tensorflow/tfjs';
+import '@tensorflow/tfjs';
 import * as depth from '@tensorflow-models/depth-estimation';
 
-console.log("ttt", tf, depth)
+const target = document.querySelector('main')
 
-if ('serviceWorker' in navigator) {
-    await navigator.serviceWorker.register('/tfsw.js')
-        .then((registration) => {
-            console.log('Service Worker registered with scope:', registration.scope);
-        }).catch((error) => {
-            console.log('Service Worker registration failed:', error);
-        });
-
-}
 
 const image = new Image();
 const done = new Promise(r => image.onload = r);
 image.src = 'test-image.jpg'
-image.width = 300
-document.body.appendChild(image)
+image.width = 400
+target.appendChild(image)
 
 await done
 
@@ -36,7 +28,7 @@ console.log(depthMap)
 const im = await depthMap.toCanvasImageSource()
 
 const canvas = document.createElement('canvas')
-document.body.appendChild(canvas)
+target.appendChild(canvas)
 canvas.width = image.width
 canvas.height = image.height
 canvas.getContext('2d').drawImage(im, 0, 0);

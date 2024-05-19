@@ -9,29 +9,36 @@ details#menu {
   position: absolute;
   z-index: 1000;
   background-color: #0003;
-}
+  padding: 1em;
 
-details#menu nav {
-  display: flex;
-  flex-direction: column;
-  font-size: 1.5rem;
-}
-details#menu a {
-  padding: 0.5em;
+  summary {
+    font-size: 1.5rem;
+  }
+
+  nav {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+  }
+
+  a {
+    padding: 1em 0;
+  }
 }
 
 a {
   color: inherit;
   text-decoration-color: #fff4;
   text-decoration-thickness: 2px;
-}
 
-a:hover {
-  color: #fff;
+  &:hover {
+    color: #fff;
+  }
 }
 
 main {
   display: flex;
   flex-direction: column;
   width: 100vw;
+  align-items: center;
 }
