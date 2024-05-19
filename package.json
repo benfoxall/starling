@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "esbuild src/main.js src/track-worker.js --outdir=www/dist --bundle --loader:.woff2=file --loader:.task=file --loader:.woff=file --format=esm --define:DEV=true --servedir=www --serve --watch",
-    "build": "esbuild src/main.js src/track-worker.js --outdir=www/dist --bundle --loader:.woff2=file --loader:.task=file --loader:.woff=file --format=esm --define:DEV=false --minify --sourcemap",
+    "start": "esbuild src/main.js src/track-worker.js src/depth-worker.js --outdir=www/dist --bundle --loader:.woff2=file --loader:.task=file --loader:.woff=file --format=esm --define:DEV=true --servedir=www --serve --watch",
+    "build": "esbuild src/main.js src/track-worker.js src/depth-worker.js --outdir=www/dist --bundle --loader:.woff2=file --loader:.task=file --loader:.woff=file --format=esm --define:DEV=false --minify --sourcemap",
     "postinstall": "cp -r node_modules/@mediapipe/tasks-vision/wasm ./www"
   },
   "author": "",

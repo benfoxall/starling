@@ -56,10 +56,9 @@ canvas.height = image.height
 canvas.getContext('2d').drawImage(im, 0, 0);
 
 
+
 async function loop() {
     if (video?.videoWidth > 10) {
-
-        console.time("depth")
 
         const depthMap = await estimator.estimateDepth(video, estimationConfig);
         console.log(depthMap)
@@ -69,7 +68,8 @@ async function loop() {
         canvas.height = video.videoHeight
         canvas.style.width = video.width + 'px'
         canvas.getContext('2d').drawImage(im, 0, 0);
-        console.timeEnd("depth")
+
+        // await new Promise(re => setTimeout(re, 4000))
 
         requestAnimationFrame(loop)
         return;
