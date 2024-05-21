@@ -74,7 +74,7 @@ worker.addEventListener("message", (e) => {
     camera.position.x = -(result.cx - 0.5) * 4;
     camera.position.y = -(result.cy - 0.5) * 4;
     camera.position.z = 5 + result.distance * 0.1;
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    //
   } catch (e) {}
   workerBusy = false;
 });
